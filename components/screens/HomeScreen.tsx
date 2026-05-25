@@ -1,9 +1,50 @@
 'use client';
 import { useState } from 'react';
 import { restaurants, dinnerPickIds } from '@/lib/data';
+import type { SignalType } from '@/lib/data';
 import type { Tab } from '@/app/page';
 import { TabBarPlain } from '@/app/page';
-import SocialSignal from '@/components/SocialSignal';
+
+function CardSignalIcon({ type }: { type: SignalType }) {
+  if (type === 'friend') {
+    return (
+      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#bafad4', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" fill="#11301d" />
+          <path d="M4 20C4 16.69 7.58 14 12 14C16.42 14 20 16.69 20 20" stroke="#11301d" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+      </div>
+    );
+  }
+  if (type === 'community') {
+    return (
+      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#e5e5e5', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+          <circle cx="9" cy="7" r="3" fill="#737373" />
+          <circle cx="16" cy="7" r="3" fill="#a3a3a3" />
+          <path d="M2 19C2 16.24 5.13 14 9 14" stroke="#737373" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M12 19C12 16.24 14.69 14 18 14C21.31 14 24 16.24 24 19" stroke="#a3a3a3" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+      </div>
+    );
+  }
+  if (type === 'occasion') {
+    return (
+      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#fff592', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#ecbb06" />
+        </svg>
+      </div>
+    );
+  }
+  return (
+    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#dff0ff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+        <path d="M13 2L4.09 12.11A1 1 0 0 0 5 14h7l-1 8 8.91-10.11A1 1 0 0 0 19 10h-7l1-8z" fill="#069af1" />
+      </svg>
+    </div>
+  );
+}
 
 interface Props {
   onOpenRestaurant: (id: string) => void;
@@ -78,7 +119,7 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
                 onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.95)')}
                 onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
               >
-                <div style={{ width: 52, height: 52, borderRadius: '14px', background: activeCategory === cat.label ? '#bafad4' : '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', border: activeCategory === cat.label ? '2px solid #53f293' : '2px solid transparent' }}>
+                <div style={{ width: 52, height: 52, borderRadius: '50%', background: activeCategory === cat.label ? '#bafad4' : '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', border: activeCategory === cat.label ? '2px solid #53f293' : '2px solid transparent' }}>
                   {cat.emoji}
                 </div>
                 <span style={{ fontSize: '11px', fontWeight: 500, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>{cat.label}</span>
@@ -103,40 +144,46 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
               <button
                 key={r.id}
                 onClick={() => onOpenRestaurant(r.id)}
-                style={{ flexShrink: 0, width: '170px', background: '#fff', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'transform 100ms' }}
+                style={{ flexShrink: 0, width: '170px', background: '#fff', borderRadius: '12px', overflow: 'hidden', border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'transform 100ms' }}
                 onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.97)')}
                 onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
               >
-                {/* Photo with redemptions badge top-left */}
+                {/* Photo — redemptions badge top-left */}
                 <div style={{ height: '110px', position: 'relative', overflow: 'hidden' }}>
                   <img src={r.image} alt={r.shortName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   {r.redemptions && (
                     <div style={{ position: 'absolute', top: '7px', left: '7px', background: 'rgba(0,0,0,0.6)', borderRadius: '20px', padding: '3px 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <span style={{ fontSize: '10px' }}>⏰</span>
+                      <span style={{ fontSize: '10px' }}>🔥</span>
                       <span style={{ fontSize: '10px', color: '#fff', fontWeight: 600, fontFamily: 'Poppins, system-ui' }}>{r.redemptions} redemptions</span>
                     </div>
                   )}
                 </div>
-                {/* Card body */}
+                {/* Card body — fixed layout so both cards are the same height */}
                 <div style={{ padding: '10px 10px 12px' }}>
-                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '4px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3 }}>{r.shortName}</p>
-                  {/* Rating + cuisine on same line */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>★ {r.rating}</span>
-                    <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
-                    <span style={{ fontSize: '10px', color: '#e5e5e5', fontFamily: 'Poppins, system-ui' }}>·</span>
-                    <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui' }}>{r.cuisine}</span>
+                  {/* Name — single line, truncated */}
+                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '4px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.shortName}</p>
+                  {/* Rating (green ★) + cuisine — single line */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '6px', overflow: 'hidden' }}>
+                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>★ {r.rating}</span>
+                    <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>({r.reviewCount})</span>
+                    <span style={{ fontSize: '10px', color: '#e5e5e5', flexShrink: 0 }}>·</span>
+                    <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.cuisine}</span>
                   </div>
-                  {/* Social signal between rating and deal pills */}
+                  {/* Social proof chip */}
                   {r.cardSignal && (
-                    <div style={{ marginBottom: '7px' }}>
-                      <SocialSignal signal={r.cardSignal} />
+                    <div style={{ marginBottom: '7px', display: 'flex', overflow: 'hidden' }}>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#f5f5f5', borderRadius: '20px', padding: '3px 8px', overflow: 'hidden', maxWidth: '100%' }}>
+                        <CardSignalIcon type={r.cardSignal.type} />
+                        <span style={{ fontSize: '11px', color: '#0a0a0a', fontWeight: 500, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {r.cardSignal.text}
+                        </span>
+                      </div>
                     </div>
                   )}
-                  {/* Deal pills */}
-                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                  {/* Deal pills — single row, no wrap */}
+                  <div style={{ display: 'flex', gap: '4px', overflow: 'hidden', flexWrap: 'nowrap' }}>
                     {r.deals.slice(0, 2).map(d => (
-                      <span key={d.id} style={{ background: '#53f293', color: '#08180f', fontSize: '10px', fontWeight: 600, padding: '2px 7px', borderRadius: '4px', fontFamily: 'Poppins, system-ui' }}>
+                      <span key={d.id} style={{ background: '#53f293', color: '#08180f', fontSize: '10px', fontWeight: 600, padding: '2px 7px', borderRadius: '4px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
                         {d.title}
                       </span>
                     ))}
