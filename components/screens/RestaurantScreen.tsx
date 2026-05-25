@@ -115,7 +115,7 @@ export default function RestaurantScreen({ restaurantId, onBack, onBookDeal }: P
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {restaurant.deals.map(deal => (
-                <div key={deal.id} style={{ background: '#bafad4', borderRadius: '12px', padding: '16px' }}>
+                <div key={deal.id} style={{ background: '#53f293', borderRadius: '12px', padding: '16px' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px', gap: '8px' }}>
                     <span style={{ fontSize: '15px', fontWeight: 700, color: '#08180f', fontFamily: 'Poppins, system-ui', flex: 1 }}>{deal.title}</span>
                     <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>

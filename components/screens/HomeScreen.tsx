@@ -98,14 +98,7 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
             </button>
           </div>
 
-          <div style={{ padding: '0 16px 10px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <div style={{ background: '#bafad4', borderRadius: '20px', padding: '3px 10px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ fontSize: '11px', color: '#737373', fontFamily: 'Poppins, system-ui' }}>⭐</span>
-              <span style={{ fontSize: '11px', fontWeight: 600, color: '#11301d', fontFamily: 'Poppins, system-ui' }}>3.4k+ redemptions</span>
-            </div>
-          </div>
-
-          <div style={{ paddingLeft: '16px', display: 'flex', gap: '12px', overflowX: 'auto', paddingRight: '16px', scrollbarWidth: 'none' }}>
+          <div style={{ paddingLeft: '16px', display: 'flex', gap: '12px', overflowX: 'auto', paddingRight: '16px', scrollbarWidth: 'none', paddingBottom: '4px' }}>
             {dinnerPicks.map(r => (
               <button
                 key={r.id}
@@ -114,21 +107,33 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
                 onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.97)')}
                 onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
               >
+                {/* Photo with redemptions badge top-left */}
                 <div style={{ height: '110px', position: 'relative', overflow: 'hidden' }}>
                   <img src={r.image} alt={r.shortName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  {r.cardSignal && (
-                    <div style={{ position: 'absolute', bottom: '8px', left: '8px', background: 'rgba(0,0,0,0.55)', borderRadius: '20px', padding: '3px 8px' }}>
-                      <span style={{ fontSize: '11px', color: '#fff', fontWeight: 500, fontFamily: 'Poppins, system-ui' }}>{r.cardSignal.text}</span>
+                  {r.redemptions && (
+                    <div style={{ position: 'absolute', top: '7px', left: '7px', background: 'rgba(0,0,0,0.6)', borderRadius: '20px', padding: '3px 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{ fontSize: '10px' }}>⏰</span>
+                      <span style={{ fontSize: '10px', color: '#fff', fontWeight: 600, fontFamily: 'Poppins, system-ui' }}>{r.redemptions} redemptions</span>
                     </div>
                   )}
                 </div>
+                {/* Card body */}
                 <div style={{ padding: '10px 10px 12px' }}>
-                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '2px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3 }}>{r.shortName}</p>
-                  <p style={{ fontSize: '11px', color: '#737373', marginBottom: '8px', fontFamily: 'Poppins, system-ui' }}>{r.cuisine}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '8px' }}>
+                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '4px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3 }}>{r.shortName}</p>
+                  {/* Rating + cuisine on same line */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '6px', flexWrap: 'wrap' }}>
                     <span style={{ fontSize: '11px', fontWeight: 700, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>★ {r.rating}</span>
                     <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
+                    <span style={{ fontSize: '10px', color: '#e5e5e5', fontFamily: 'Poppins, system-ui' }}>·</span>
+                    <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui' }}>{r.cuisine}</span>
                   </div>
+                  {/* Social signal between rating and deal pills */}
+                  {r.cardSignal && (
+                    <div style={{ marginBottom: '7px' }}>
+                      <SocialSignal signal={r.cardSignal} />
+                    </div>
+                  )}
+                  {/* Deal pills */}
                   <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                     {r.deals.slice(0, 2).map(d => (
                       <span key={d.id} style={{ background: '#53f293', color: '#08180f', fontSize: '10px', fontWeight: 600, padding: '2px 7px', borderRadius: '4px', fontFamily: 'Poppins, system-ui' }}>

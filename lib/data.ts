@@ -32,6 +32,7 @@ export type Restaurant = {
   cardSignal: SocialSignal | null;
   deals: Deal[];
   isNew?: boolean;
+  redemptions?: string;
 };
 
 export const restaurants: Restaurant[] = [
@@ -50,6 +51,7 @@ export const restaurants: Restaurant[] = [
     image: '/images/otto-burger.jpg',
     gradientFrom: '#7c2d12',
     gradientTo: '#3b0f05',
+    redemptions: '3.4k+',
     cardSignal: { type: 'friend', text: 'Jack visited · last week' },
     deals: [
       {
@@ -85,6 +87,7 @@ export const restaurants: Restaurant[] = [
     image: '/images/quan19.jpg',
     gradientFrom: '#14532d',
     gradientTo: '#052e16',
+    redemptions: '3.4k+',
     cardSignal: { type: 'community', text: '14 people in your area this week' },
     deals: [
       {
