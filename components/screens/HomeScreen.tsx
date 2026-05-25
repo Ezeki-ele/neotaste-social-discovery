@@ -92,10 +92,10 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
   const dinnerPicks = dinnerPickIds.map(id => restaurants.find(r => r.id === id)!).filter(Boolean);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
+    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
       <div style={{ paddingTop: 'env(safe-area-inset-top, 12px)', background: '#fff' }} />
 
-      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
+      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', paddingBottom: '84px' }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px 8px' }}>
           <button style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer' }}>
@@ -197,9 +197,9 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
                     <span style={{ fontSize: '10px', color: '#d4d4d4', flexShrink: 0 }}>·</span>
                     <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.cuisine}</span>
                   </div>
-                  {/* Social proof chip — #f5f5f5 pill, orange avatar, gray text */}
+                  {/* Social proof chip — content-width pill, avatar + text */}
                   {r.cardSignal && (
-                    <div style={{ marginBottom: '7px', display: 'flex', overflow: 'hidden' }}>
+                    <div style={{ marginBottom: '7px', overflow: 'hidden' }}>
                       <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#f5f5f5', borderRadius: '20px', padding: '3px 8px', overflow: 'hidden', maxWidth: '100%' }}>
                         <CardSignalIcon type={r.cardSignal.type} />
                         <span style={{ fontSize: '11px', color: '#737373', fontWeight: 500, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

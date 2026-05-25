@@ -98,8 +98,8 @@ export default function App() {
 
 function ProfilePlaceholder({ activeTab, onTabChange }: { activeTab: Tab; onTabChange: (t: Tab) => void }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ position: 'relative', height: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', paddingBottom: '84px' }}>
         <p style={{ color: '#737373', fontSize: '15px', fontFamily: 'Poppins, system-ui' }}>Profile coming soon</p>
       </div>
       <TabBarPlain activeTab={activeTab} onTabChange={onTabChange} />
@@ -112,19 +112,24 @@ export function TabBarPlain({ activeTab, onTabChange }: { activeTab: Tab; onTabC
   const labels: Record<Tab, string> = { home: 'Home', discover: 'Discover', bookings: 'Bookings', profile: 'Profile' };
 
   return (
-    /* Floating pill wrapper — handles safe-area spacing */
+    /* Floating pill — absolutely positioned so content scrolls behind it */
     <div style={{
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
       padding: '8px 12px',
       paddingBottom: 'calc(8px + env(safe-area-inset-bottom, 0px))',
-      background: 'transparent',
     }}>
       <div style={{
         display: 'flex',
-        background: '#f5f5f5',
+        background: 'rgba(255, 255, 255, 0.78)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
         borderRadius: '28px',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+        border: '1px solid rgba(255, 255, 255, 0.6)',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08)',
         padding: '4px',
-        overflow: 'hidden',
       }}>
         {tabs.map(tab => (
           <button
@@ -195,10 +200,10 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
 
   if (tab === 'bookings') return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="4" width="18" height="17" rx="2.5" stroke={color} strokeWidth="1.5" fill={active ? '#f5f5f5' : 'none'} />
-      <path d="M3 9.5H21" stroke={color} strokeWidth="1.5" />
-      <path d="M8 2.5V6M16 2.5V6" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M7.5 14.5L10.5 17.5L16.5 12" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="3" y="4" width="18" height="17" rx="2.5" stroke={color} strokeWidth="1.5" fill="none" />
+      <path d="M3 9.5H21" stroke={color} strokeWidth="1.3" />
+      <path d="M8 2.5V6M16 2.5V6" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M9 15.5L11.2 17.5L15.5 13" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 
@@ -207,13 +212,13 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       {active ? (
         <>
-          <circle cx="12" cy="7.5" r="3.75" fill={color} />
-          <path d="M3.75 20.5C3.75 16.91 7.47 14 12 14C16.53 14 20.25 16.91 20.25 20.5" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="12" cy="8" r="3.5" fill={color} />
+          <path d="M5 21C5 17.5 8.13 15 12 15C15.87 15 19 17.5 19 21" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
         </>
       ) : (
         <>
-          <circle cx="12" cy="7.5" r="3.75" stroke={color} strokeWidth="1.5" />
-          <path d="M3.75 20.5C3.75 16.91 7.47 14 12 14C16.53 14 20.25 16.91 20.25 20.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="12" cy="8" r="3.5" stroke={color} strokeWidth="1.5" />
+          <path d="M5 21C5 17.5 8.13 15 12 15C15.87 15 19 17.5 19 21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
         </>
       )}
     </svg>

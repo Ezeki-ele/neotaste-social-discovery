@@ -16,7 +16,7 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
+    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
       <div style={{ paddingTop: 'env(safe-area-inset-top, 12px)' }} />
 
       {/* Search bar */}
@@ -76,7 +76,7 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
             </div>
           )}
 
-          <div style={{ flex: 1, overflowY: 'auto' }}>
+          <div style={{ flex: 1, overflowY: 'auto', paddingBottom: '84px' }}>
             {restaurants.map((r, i) => (
               <button
                 key={r.id}

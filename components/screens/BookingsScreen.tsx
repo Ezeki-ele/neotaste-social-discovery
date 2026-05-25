@@ -10,14 +10,14 @@ interface Props {
 
 export default function BookingsScreen({ onOpenPostVisit, activeTab, onTabChange }: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
+    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
       <div style={{ paddingTop: 'env(safe-area-inset-top, 12px)' }} />
 
       <div style={{ padding: '12px 20px 16px' }}>
         <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>My Bookings</h1>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px', paddingBottom: '84px' }}>
         <p style={{ fontSize: '13px', fontWeight: 600, color: '#737373', marginBottom: '10px', fontFamily: 'Poppins, system-ui', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Upcoming</p>
 
         <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid rgba(28,29,40,0.1)', overflow: 'hidden', marginBottom: '16px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
