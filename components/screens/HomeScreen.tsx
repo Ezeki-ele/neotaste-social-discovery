@@ -6,40 +6,39 @@ import type { Tab } from '@/app/page';
 import { TabBarPlain } from '@/app/page';
 
 function CardSignalIcon({ type }: { type: SignalType }) {
+  // Friend: real photo avatar
   if (type === 'friend') {
     return (
-      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#bafad4', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="8" r="4" fill="#11301d" />
-          <path d="M4 20C4 16.69 7.58 14 12 14C16.42 14 20 16.69 20 20" stroke="#11301d" strokeWidth="2.5" strokeLinecap="round" />
-        </svg>
+      <div style={{ width: 18, height: 18, borderRadius: '50%', flexShrink: 0, overflow: 'hidden' }}>
+        <img src="/images/avatar-jack.jpg" alt="Jack" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </div>
     );
   }
+  // Community: two-people group icon
   if (type === 'community') {
     return (
-      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#e5e5e5', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
-          <circle cx="9" cy="7" r="3" fill="#737373" />
+      <div style={{ width: 18, height: 18, borderRadius: '50%', background: '#d4d4d4', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+          <circle cx="8" cy="7" r="3" fill="#737373" />
           <circle cx="16" cy="7" r="3" fill="#a3a3a3" />
-          <path d="M2 19C2 16.24 5.13 14 9 14" stroke="#737373" strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M12 19C12 16.24 14.69 14 18 14C21.31 14 24 16.24 24 19" stroke="#a3a3a3" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M1 20C1 17 4.13 14.5 8 14.5" stroke="#737373" strokeWidth="2.2" strokeLinecap="round" />
+          <path d="M11.5 20C11.5 17 14.13 14.5 17 14.5C19.87 14.5 23 17 23 20" stroke="#a3a3a3" strokeWidth="2.2" strokeLinecap="round" />
         </svg>
       </div>
     );
   }
   if (type === 'occasion') {
     return (
-      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#fff592', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+      <div style={{ width: 18, height: 18, borderRadius: '50%', background: '#fff592', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#ecbb06" />
         </svg>
       </div>
     );
   }
   return (
-    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#dff0ff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+    <div style={{ width: 18, height: 18, borderRadius: '50%', background: '#dff0ff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
         <path d="M13 2L4.09 12.11A1 1 0 0 0 5 14h7l-1 8 8.91-10.11A1 1 0 0 0 19 10h-7l1-8z" fill="#069af1" />
       </svg>
     </div>
@@ -53,11 +52,39 @@ interface Props {
 }
 
 const categories = [
-  { label: 'Burger', emoji: '🍔' },
+  { label: 'Burgers', emoji: '🍔' },
   { label: 'Café', emoji: '☕' },
   { label: 'Pizza', emoji: '🍕' },
   { label: 'Sushi', emoji: '🍣' },
   { label: 'Breakfast', emoji: '🥞' },
+  { label: 'Bowls', emoji: '🥗' },
+  { label: 'Indian', emoji: '🍛' },
+  { label: 'Bar', emoji: '🍺' },
+  { label: 'Brunch', emoji: '🍳' },
+  { label: 'BBQ', emoji: '🥩' },
+  { label: 'Pasta', emoji: '🍝' },
+  { label: 'Fast Food', emoji: '🍟' },
+  { label: 'Desserts', emoji: '🍰' },
+  { label: 'Bakery', emoji: '🥐' },
+  { label: 'Sandwich', emoji: '🥪' },
+  { label: 'Drinks', emoji: '🥤' },
+  { label: 'Bubble Tea', emoji: '🧋' },
+  { label: 'Pub', emoji: '🍻' },
+  { label: 'Korean', emoji: '🍱' },
+  { label: 'Mexican', emoji: '🌮' },
+  { label: 'Chinese', emoji: '🥟' },
+  { label: 'Thai', emoji: '🍜' },
+  { label: 'Italian', emoji: '🫕' },
+  { label: 'Vietnamese', emoji: '🍲' },
+  { label: 'Turkish', emoji: '🥙' },
+  { label: 'Ice Cream', emoji: '🍦' },
+  { label: 'Seafood', emoji: '🦐' },
+  { label: 'Spanish', emoji: '🥘' },
+  { label: 'German', emoji: '🥨' },
+  { label: 'French', emoji: '🥖' },
+  { label: 'African', emoji: '🍖' },
+  { label: 'Fine Dining', emoji: '🍽️' },
+  { label: 'American', emoji: '🌭' },
 ];
 
 export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }: Props) {
@@ -158,32 +185,33 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
                     </div>
                   )}
                 </div>
-                {/* Card body — fixed layout so both cards are the same height */}
-                <div style={{ padding: '10px 10px 12px' }}>
+                {/* Card body */}
+                <div style={{ padding: '10px 12px 12px' }}>
                   {/* Name — single line, truncated */}
                   <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '4px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.shortName}</p>
-                  {/* Rating (green ★) + cuisine — single line */}
+                  {/* Rating: ★ in brand green, number + cuisine in gray — single line */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '6px', overflow: 'hidden' }}>
-                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>★ {r.rating}</span>
+                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>★</span>
+                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>{r.rating}</span>
                     <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>({r.reviewCount})</span>
-                    <span style={{ fontSize: '10px', color: '#e5e5e5', flexShrink: 0 }}>·</span>
+                    <span style={{ fontSize: '10px', color: '#d4d4d4', flexShrink: 0 }}>·</span>
                     <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.cuisine}</span>
                   </div>
-                  {/* Social proof chip */}
+                  {/* Social proof chip — #f5f5f5 pill, orange avatar, gray text */}
                   {r.cardSignal && (
                     <div style={{ marginBottom: '7px', display: 'flex', overflow: 'hidden' }}>
                       <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#f5f5f5', borderRadius: '20px', padding: '3px 8px', overflow: 'hidden', maxWidth: '100%' }}>
                         <CardSignalIcon type={r.cardSignal.type} />
-                        <span style={{ fontSize: '11px', color: '#0a0a0a', fontWeight: 500, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <span style={{ fontSize: '11px', color: '#737373', fontWeight: 500, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {r.cardSignal.text}
                         </span>
                       </div>
                     </div>
                   )}
-                  {/* Deal pills — single row, no wrap */}
+                  {/* Deal pills — fully rounded, single row */}
                   <div style={{ display: 'flex', gap: '4px', overflow: 'hidden', flexWrap: 'nowrap' }}>
                     {r.deals.slice(0, 2).map(d => (
-                      <span key={d.id} style={{ background: '#53f293', color: '#08180f', fontSize: '10px', fontWeight: 600, padding: '2px 7px', borderRadius: '4px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
+                      <span key={d.id} style={{ background: '#53f293', color: '#08180f', fontSize: '10px', fontWeight: 600, padding: '3px 10px', borderRadius: '20px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
                         {d.title}
                       </span>
                     ))}

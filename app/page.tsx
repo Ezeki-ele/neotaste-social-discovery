@@ -112,39 +112,50 @@ export function TabBarPlain({ activeTab, onTabChange }: { activeTab: Tab; onTabC
   const labels: Record<Tab, string> = { home: 'Home', discover: 'Discover', bookings: 'Bookings', profile: 'Profile' };
 
   return (
+    /* Floating pill wrapper — handles safe-area spacing */
     <div style={{
-      display: 'flex',
-      borderTop: '1px solid rgba(28,29,40,0.1)',
-      background: '#fff',
-      paddingBottom: 'env(safe-area-inset-bottom, 8px)',
+      padding: '8px 12px',
+      paddingBottom: 'calc(8px + env(safe-area-inset-bottom, 0px))',
+      background: 'transparent',
     }}>
-      {tabs.map(tab => (
-        <button
-          key={tab}
-          onClick={() => onTabChange(tab)}
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '3px',
-            padding: '10px 0 8px',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-        >
-          <TabIcon tab={tab} active={activeTab === tab} />
-          <span style={{
-            fontSize: '10px',
-            fontWeight: 600,
-            color: activeTab === tab ? '#11301d' : '#737373',
-            fontFamily: 'Poppins, system-ui, sans-serif',
-          }}>
-            {labels[tab]}
-          </span>
-        </button>
-      ))}
+      <div style={{
+        display: 'flex',
+        background: '#f5f5f5',
+        borderRadius: '28px',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+        padding: '4px',
+        overflow: 'hidden',
+      }}>
+        {tabs.map(tab => (
+          <button
+            key={tab}
+            onClick={() => onTabChange(tab)}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '2px',
+              padding: '8px 4px 6px',
+              background: activeTab === tab ? '#fff' : 'none',
+              borderRadius: '22px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'background 200ms',
+            }}
+          >
+            <TabIcon tab={tab} active={activeTab === tab} />
+            <span style={{
+              fontSize: '10px',
+              fontWeight: activeTab === tab ? 700 : 500,
+              color: activeTab === tab ? '#0a0a0a' : '#a3a3a3',
+              fontFamily: 'Poppins, system-ui, sans-serif',
+            }}>
+              {labels[tab]}
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -168,16 +179,15 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
 
   if (tab === 'discover') return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9.25" stroke={color} strokeWidth="1.5" fill={active ? '#f5f5f5' : 'none'} />
       {active ? (
         <>
-          <circle cx="12" cy="12" r="2.5" fill={color} />
-          <path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill={color} />
+          <circle cx="12" cy="9" r="2.5" fill="#fff" />
         </>
       ) : (
         <>
-          <circle cx="12" cy="12" r="2.5" stroke={color} strokeWidth="1.5" />
-          <path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke={color} strokeWidth="1.6" fill="none" strokeLinejoin="round" />
+          <circle cx="12" cy="9" r="2.5" stroke={color} strokeWidth="1.4" fill="none" />
         </>
       )}
     </svg>
