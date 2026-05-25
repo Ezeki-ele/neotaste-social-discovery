@@ -185,33 +185,35 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
                     </div>
                   )}
                 </div>
-                {/* Card body */}
-                <div style={{ padding: '10px 12px 12px' }}>
-                  {/* Name — single line, truncated */}
-                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '4px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</p>
-                  {/* Rating: ★ in brand green, number + cuisine in gray — single line */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '6px', overflow: 'hidden' }}>
-                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>★</span>
-                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>{r.rating}</span>
-                    <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>({r.reviewCount})</span>
-                    <span style={{ fontSize: '10px', color: '#d4d4d4', flexShrink: 0 }}>·</span>
-                    <span style={{ fontSize: '10px', color: '#737373', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.cuisine}</span>
+                {/* Card body — flex-col gap-[4px] matching Figma layout */}
+                <div style={{ padding: '10px 8px 12px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {/* Name */}
+                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#1c1d28', fontFamily: 'Poppins, system-ui', lineHeight: '18px', letterSpacing: '0.25px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</p>
+                  {/* Rating + dot + cuisine */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
+                      <span style={{ fontSize: '12px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui' }}>★</span>
+                      <span style={{ fontSize: '12px', fontWeight: 500, color: '#52535b', fontFamily: 'Poppins, system-ui' }}>{r.rating}</span>
+                      <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
+                    </div>
+                    <span style={{ width: '2px', height: '2px', borderRadius: '50%', background: '#52535b', flexShrink: 0, display: 'inline-block' }} />
+                    <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.cuisine}</span>
                   </div>
-                  {/* Social proof chip — content-width pill, avatar + text */}
+                  {/* Social proof chip */}
                   {r.cardSignal && (
-                    <div style={{ marginBottom: '7px', overflow: 'hidden' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#f5f5f5', borderRadius: '20px', padding: '3px 8px', overflow: 'hidden', maxWidth: '100%' }}>
+                    <div style={{ overflow: 'hidden' }}>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#e5e5e5', borderRadius: '16px', padding: '4px 8px', overflow: 'hidden', maxWidth: '100%' }}>
                         <CardSignalIcon type={r.cardSignal.type} />
-                        <span style={{ fontSize: '11px', color: '#737373', fontWeight: 500, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <span style={{ fontSize: '11px', color: 'rgba(0,0,0,0.7)', fontWeight: 600, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {r.cardSignal.text}
                         </span>
                       </div>
                     </div>
                   )}
-                  {/* Deal pills — fully rounded, single row */}
-                  <div style={{ display: 'flex', gap: '4px', overflow: 'hidden', flexWrap: 'nowrap' }}>
+                  {/* Deal pills */}
+                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'nowrap', overflow: 'hidden' }}>
                     {r.deals.slice(0, 2).map(d => (
-                      <span key={d.id} style={{ background: '#53f293', color: '#08180f', fontSize: '10px', fontWeight: 600, padding: '3px 10px', borderRadius: '20px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
+                      <span key={d.id} style={{ background: '#53f293', color: '#1c1d28', fontSize: '11px', fontWeight: 600, padding: '4px 8px', borderRadius: '16px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
                         {d.title}
                       </span>
                     ))}
