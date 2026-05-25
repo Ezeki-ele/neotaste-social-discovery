@@ -100,7 +100,7 @@ function ProfilePlaceholder({ activeTab, onTabChange }: { activeTab: Tab; onTabC
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#737373', fontSize: '15px', fontFamily: 'Poppins, system-ui' }}>Profil kommt bald</p>
+        <p style={{ color: '#737373', fontSize: '15px', fontFamily: 'Poppins, system-ui' }}>Profile coming soon</p>
       </div>
       <TabBarPlain activeTab={activeTab} onTabChange={onTabChange} />
     </div>
@@ -150,31 +150,62 @@ export function TabBarPlain({ activeTab, onTabChange }: { activeTab: Tab; onTabC
 }
 
 export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
-  const color = active ? '#11301d' : '#737373';
+  const color = active ? '#11301d' : '#a3a3a3';
+
   if (tab === 'home') return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M3 12L12 4L21 12V20C21 20.55 20.55 21 20 21H15V16H9V21H4C3.45 21 3 20.55 3 20V12Z"
-        fill={active ? '#bafad4' : 'none'} stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      {active ? (
+        // Filled home
+        <path d="M10.55 2.532a2 2 0 0 1 2.9 0l7 7.602A2 2 0 0 1 21 11.5V20a2 2 0 0 1-2 2h-4v-5h-6v5H5a2 2 0 0 1-2-2v-8.5a2 2 0 0 1 .55-1.366l7-7.602Z" fill={color} />
+      ) : (
+        // Outline home
+        <>
+          <path d="M10.55 2.532a2 2 0 0 1 2.9 0l7 7.602A2 2 0 0 1 21 11.5V20a2 2 0 0 1-2 2h-4v-5h-6v5H5a2 2 0 0 1-2-2v-8.5a2 2 0 0 1 .55-1.366l7-7.602Z" stroke={color} strokeWidth="1.6" fill="none" />
+        </>
+      )}
     </svg>
   );
+
   if (tab === 'discover') return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.8" />
-      <circle cx="12" cy="12" r="2.5" fill={active ? color : 'none'} stroke={color} strokeWidth="1.5" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9.25" stroke={color} strokeWidth="1.5" fill={active ? '#f5f5f5' : 'none'} />
+      {active ? (
+        <>
+          <circle cx="12" cy="12" r="2.5" fill={color} />
+          <path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <circle cx="12" cy="12" r="2.5" stroke={color} strokeWidth="1.5" />
+          <path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+        </>
+      )}
     </svg>
   );
+
   if (tab === 'bookings') return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="5" width="18" height="16" rx="2" stroke={color} strokeWidth="1.8" />
-      <path d="M3 10H21" stroke={color} strokeWidth="1.8" />
-      <path d="M8 3V7M16 3V7" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
-      {active && <path d="M7.5 15L10.5 18L16.5 12" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />}
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="4" width="18" height="17" rx="2.5" stroke={color} strokeWidth="1.5" fill={active ? '#f5f5f5' : 'none'} />
+      <path d="M3 9.5H21" stroke={color} strokeWidth="1.5" />
+      <path d="M8 2.5V6M16 2.5V6" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M7.5 14.5L10.5 17.5L16.5 12" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
+
+  // profile
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="8" r="4" stroke={color} strokeWidth="1.8" fill={active ? '#bafad4' : 'none'} />
-      <path d="M4 20C4 16.69 7.58 14 12 14C16.42 14 20 16.69 20 20" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      {active ? (
+        <>
+          <circle cx="12" cy="7.5" r="3.75" fill={color} />
+          <path d="M3.75 20.5C3.75 16.91 7.47 14 12 14C16.53 14 20.25 16.91 20.25 20.5" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <circle cx="12" cy="7.5" r="3.75" stroke={color} strokeWidth="1.5" />
+          <path d="M3.75 20.5C3.75 16.91 7.47 14 12 14C16.53 14 20.25 16.91 20.25 20.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+        </>
+      )}
     </svg>
   );
 }

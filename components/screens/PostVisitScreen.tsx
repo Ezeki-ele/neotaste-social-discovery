@@ -184,10 +184,14 @@ export default function PostVisitScreen({ restaurantId, onComplete }: Props) {
         {/* Restaurant image */}
         <div style={{
           flex: '0 0 45%',
-          background: `linear-gradient(135deg, ${restaurant?.gradientFrom ?? '#1e1b4b'}, ${restaurant?.gradientTo ?? '#0f0a2e'})`,
           position: 'relative',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
+          overflow: 'hidden',
+          background: restaurant?.gradientFrom ? `linear-gradient(135deg, ${restaurant.gradientFrom}, ${restaurant.gradientTo})` : '#1e1b4b',
         }}>
+          {restaurant?.image && (
+            <img src={restaurant.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }} />
+          )}
           {/* NeoTaste badge */}
           <div style={{
             position: 'absolute', top: '50%', left: '50%',
