@@ -188,7 +188,7 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
                 {/* Card body */}
                 <div style={{ padding: '10px 12px 12px' }}>
                   {/* Name — single line, truncated */}
-                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '4px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.shortName}</p>
+                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', marginBottom: '4px', fontFamily: 'Poppins, system-ui', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</p>
                   {/* Rating: ★ in brand green, number + cuisine in gray — single line */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '6px', overflow: 'hidden' }}>
                     <span style={{ fontSize: '11px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>★</span>
