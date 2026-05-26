@@ -3,7 +3,39 @@ import { useState } from 'react';
 import { restaurants } from '@/lib/data';
 import type { Tab } from '@/app/page';
 import { TabBarPlain } from '@/app/page';
-import SocialSignal from '@/components/SocialSignal';
+import type { SignalType } from '@/lib/data';
+
+function DiscoverSignalIcon({ type }: { type: SignalType }) {
+  if (type === 'friend') return (
+    <div style={{ width: 16, height: 16, borderRadius: '50%', flexShrink: 0, overflow: 'hidden' }}>
+      <img src="/images/avatar-jack.jpg" alt="Jack" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+    </div>
+  );
+  if (type === 'community') return (
+    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#d4d4d4', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+        <circle cx="8" cy="7" r="3" fill="#737373" />
+        <circle cx="16" cy="7" r="3" fill="#a3a3a3" />
+        <path d="M1 20C1 17 4.13 14.5 8 14.5" stroke="#737373" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M11.5 20C11.5 17 14.13 14.5 17 14.5C19.87 14.5 23 17 23 20" stroke="#a3a3a3" strokeWidth="2.2" strokeLinecap="round" />
+      </svg>
+    </div>
+  );
+  if (type === 'occasion') return (
+    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#fff592', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#ecbb06" />
+      </svg>
+    </div>
+  );
+  return (
+    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#dff0ff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+        <path d="M13 2L4.09 12.11A1 1 0 0 0 5 14h7l-1 8 8.91-10.11A1 1 0 0 0 19 10h-7l1-8z" fill="#069af1" />
+      </svg>
+    </div>
+  );
+}
 
 interface Props {
   onOpenRestaurant: (id: string) => void;
@@ -16,7 +48,7 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
+    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
       <div style={{ paddingTop: 'env(safe-area-inset-top, 12px)' }} />
 
       {/* Search bar */}
@@ -76,7 +108,7 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
             </div>
           )}
 
-          <div style={{ flex: 1, overflowY: 'auto' }}>
+          <div style={{ flex: 1, overflowY: 'auto', paddingBottom: '84px' }}>
             {restaurants.map((r, i) => (
               <button
                 key={r.id}
@@ -86,42 +118,55 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
                 onMouseUp={e => (e.currentTarget.style.background = 'none')}
               >
                 {/* Photo */}
-                <div style={{ width: 76, height: 76, borderRadius: '10px', flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
+                <div style={{ width: 108, height: 108, borderRadius: '16px', flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
                   <img src={r.image} alt={r.shortName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   {r.isNew && (
-                    <div style={{ position: 'absolute', top: '5px', left: '5px', background: '#fff592', borderRadius: '4px', padding: '1px 6px' }}>
-                      <span style={{ fontSize: '9px', fontWeight: 700, color: '#a26706', fontFamily: 'Poppins, system-ui' }}>New</span>
+                    <div style={{ position: 'absolute', top: '8px', left: '8px', background: '#1c1d28', borderRadius: '8px', padding: '2px 6px' }}>
+                      <span style={{ fontSize: '10px', fontWeight: 700, color: '#fff', fontFamily: 'Poppins, system-ui', lineHeight: '12px', display: 'block' }}>New</span>
                     </div>
                   )}
                 </div>
 
                 {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: '14px', fontWeight: 700, color: '#0a0a0a', marginBottom: '2px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <p style={{ fontSize: '14px', fontWeight: 700, color: '#1c1d28', marginBottom: '2px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {r.name}
                   </p>
-                  <p style={{ fontSize: '12px', color: '#737373', marginBottom: '4px', fontFamily: 'Poppins, system-ui' }}>{r.cuisine}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: r.cardSignal ? '5px' : '7px' }}>
-                    <span style={{ fontSize: '12px', fontWeight: 700, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>★ {r.rating}</span>
-                    <span style={{ fontSize: '11px', color: '#737373', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount}) · {r.distance}</span>
+                  {/* Rating + distance + cuisine — one row per Figma 8301-17479 */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: r.cardSignal ? '5px' : '6px', overflow: 'hidden' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
+                      <span style={{ fontSize: '12px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui' }}>★</span>
+                      <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui' }}>{r.rating}</span>
+                      <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
+                    </div>
+                    <span style={{ width: '2px', height: '2px', borderRadius: '50%', background: '#737373', flexShrink: 0, display: 'inline-block' }} />
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>{r.distance}</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>|</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.cuisine}</span>
                   </div>
+                  {/* Social proof chip — matches HomeScreen style */}
                   {r.cardSignal && (
-                    <div style={{ marginBottom: '7px' }}>
-                      <SocialSignal signal={r.cardSignal} />
+                    <div style={{ marginBottom: '6px', overflow: 'hidden' }}>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#e5e5e5', borderRadius: '16px', padding: '4px 8px', overflow: 'hidden', maxWidth: '100%' }}>
+                        <DiscoverSignalIcon type={r.cardSignal.type} />
+                        <span style={{ fontSize: '11px', color: 'rgba(0,0,0,0.7)', fontWeight: 600, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {r.cardSignal.text}
+                        </span>
+                      </div>
                     </div>
                   )}
-                  <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  {/* Deal chips — matches HomeScreen style */}
+                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'nowrap', overflow: 'hidden' }}>
                     {r.deals.slice(0, 2).map(d => (
-                      <span key={d.id} style={{ background: '#53f293', color: '#08180f', fontSize: '11px', fontWeight: 600, padding: '3px 8px', borderRadius: '4px', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>
+                      <span key={d.id} style={{ background: '#53f293', color: '#1c1d28', fontSize: '11px', fontWeight: 600, padding: '4px 8px', borderRadius: '16px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
                         {d.title}
                       </span>
                     ))}
                     {r.deals.length > 2 && (
-                      <span style={{ background: '#f5f5f5', color: '#737373', fontSize: '11px', fontWeight: 600, padding: '3px 7px', borderRadius: '4px', fontFamily: 'Poppins, system-ui' }}>
+                      <span style={{ background: '#f5f5f5', color: '#737373', fontSize: '11px', fontWeight: 600, padding: '4px 7px', borderRadius: '16px', fontFamily: 'Poppins, system-ui' }}>
                         +{r.deals.length - 2}
                       </span>
-                    )}
-                  </div>
+                    )}</div>
                 </div>
               </button>
             ))}
@@ -141,7 +186,10 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
             <div style={{ flex: 1 }}>
               <p style={{ fontSize: '14px', fontWeight: 700, color: '#0a0a0a', marginBottom: '2px', fontFamily: 'Poppins, system-ui' }}>Capo's Coffee Hafencity</p>
               <p style={{ fontSize: '12px', color: '#737373', marginBottom: '5px', fontFamily: 'Poppins, system-ui' }}>Breakfast, Coffee · 4.5 km</p>
-              <SocialSignal signal={{ type: 'friend', text: 'Jack visited · last week' }} />
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#e5e5e5', borderRadius: '16px', padding: '4px 8px' }}>
+                <DiscoverSignalIcon type="friend" />
+                <span style={{ fontSize: '11px', color: 'rgba(0,0,0,0.7)', fontWeight: 600, fontFamily: 'Poppins, system-ui' }}>Jack visited · last week</span>
+              </div>
             </div>
             <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">

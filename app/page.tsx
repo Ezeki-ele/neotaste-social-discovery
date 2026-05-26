@@ -98,8 +98,8 @@ export default function App() {
 
 function ProfilePlaceholder({ activeTab, onTabChange }: { activeTab: Tab; onTabChange: (t: Tab) => void }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ position: 'relative', height: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', paddingBottom: '84px' }}>
         <p style={{ color: '#737373', fontSize: '15px', fontFamily: 'Poppins, system-ui' }}>Profile coming soon</p>
       </div>
       <TabBarPlain activeTab={activeTab} onTabChange={onTabChange} />
@@ -112,45 +112,62 @@ export function TabBarPlain({ activeTab, onTabChange }: { activeTab: Tab; onTabC
   const labels: Record<Tab, string> = { home: 'Home', discover: 'Discover', bookings: 'Bookings', profile: 'Profile' };
 
   return (
+    /* Floating pill — absolutely positioned so content scrolls behind it */
     <div style={{
-      display: 'flex',
-      borderTop: '1px solid rgba(28,29,40,0.1)',
-      background: '#fff',
-      paddingBottom: 'env(safe-area-inset-bottom, 8px)',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      padding: '8px 12px',
+      paddingBottom: 'calc(8px + env(safe-area-inset-bottom, 0px))',
     }}>
-      {tabs.map(tab => (
-        <button
-          key={tab}
-          onClick={() => onTabChange(tab)}
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '3px',
-            padding: '10px 0 8px',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-        >
-          <TabIcon tab={tab} active={activeTab === tab} />
-          <span style={{
-            fontSize: '10px',
-            fontWeight: 600,
-            color: activeTab === tab ? '#11301d' : '#737373',
-            fontFamily: 'Poppins, system-ui, sans-serif',
-          }}>
-            {labels[tab]}
-          </span>
-        </button>
-      ))}
+      <div style={{
+        display: 'flex',
+        background: 'rgba(255, 255, 255, 0.78)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        borderRadius: '28px',
+        border: '1px solid rgba(255, 255, 255, 0.6)',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08)',
+        padding: '4px',
+      }}>
+        {tabs.map(tab => (
+          <button
+            key={tab}
+            onClick={() => onTabChange(tab)}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '2px',
+              padding: '8px 4px 6px',
+              background: activeTab === tab ? 'rgba(0,0,0,0.05)' : 'none',
+              borderRadius: '22px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'background 200ms, opacity 200ms',
+              opacity: activeTab === tab ? 1 : 0.5,
+            }}
+          >
+            <TabIcon tab={tab} active={activeTab === tab} />
+            <span style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              color: '#0a0a0a',
+              fontFamily: 'Poppins, system-ui, sans-serif',
+            }}>
+              {labels[tab]}
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
 
 export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
-  const color = active ? '#11301d' : '#a3a3a3';
+  const color = '#0a0a0a';
 
   if (tab === 'home') return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -168,16 +185,15 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
 
   if (tab === 'discover') return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9.25" stroke={color} strokeWidth="1.5" fill={active ? '#f5f5f5' : 'none'} />
       {active ? (
         <>
-          <circle cx="12" cy="12" r="2.5" fill={color} />
-          <path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill={color} />
+          <circle cx="12" cy="9" r="2.5" fill="rgba(255,255,255,0.85)" />
         </>
       ) : (
         <>
-          <circle cx="12" cy="12" r="2.5" stroke={color} strokeWidth="1.5" />
-          <path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke={color} strokeWidth="1.6" fill="none" strokeLinejoin="round" />
+          <circle cx="12" cy="9" r="2.5" stroke={color} strokeWidth="1.4" fill="none" />
         </>
       )}
     </svg>
@@ -185,10 +201,8 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
 
   if (tab === 'bookings') return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="4" width="18" height="17" rx="2.5" stroke={color} strokeWidth="1.5" fill={active ? '#f5f5f5' : 'none'} />
-      <path d="M3 9.5H21" stroke={color} strokeWidth="1.5" />
-      <path d="M8 2.5V6M16 2.5V6" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M7.5 14.5L10.5 17.5L16.5 12" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="3" y="3" width="18" height="18" rx="4" stroke={color} strokeWidth="1.5" />
+      <path d="M8.5 12L11 14.5L15.5 9.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 
@@ -197,13 +211,13 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       {active ? (
         <>
-          <circle cx="12" cy="7.5" r="3.75" fill={color} />
-          <path d="M3.75 20.5C3.75 16.91 7.47 14 12 14C16.53 14 20.25 16.91 20.25 20.5" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="12" cy="8" r="3.5" fill={color} />
+          <path d="M5 21C5 17.5 8.13 15 12 15C15.87 15 19 17.5 19 21" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
         </>
       ) : (
         <>
-          <circle cx="12" cy="7.5" r="3.75" stroke={color} strokeWidth="1.5" />
-          <path d="M3.75 20.5C3.75 16.91 7.47 14 12 14C16.53 14 20.25 16.91 20.25 20.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="12" cy="8" r="3.5" stroke={color} strokeWidth="1.5" />
+          <path d="M5 21C5 17.5 8.13 15 12 15C15.87 15 19 17.5 19 21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
         </>
       )}
     </svg>
