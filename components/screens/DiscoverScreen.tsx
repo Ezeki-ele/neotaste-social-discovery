@@ -129,19 +129,20 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
 
                 {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: '14px', fontWeight: 700, color: '#0a0a0a', marginBottom: '2px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <p style={{ fontSize: '14px', fontWeight: 700, color: '#1c1d28', marginBottom: '2px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {r.name}
                   </p>
-                  <p style={{ fontSize: '12px', color: '#737373', marginBottom: '4px', fontFamily: 'Poppins, system-ui' }}>{r.cuisine}</p>
-                  {/* Rating — matches HomeScreen style */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: r.cardSignal ? '5px' : '6px', overflow: 'hidden' }}>
+                  {/* Rating + distance + cuisine — one row per Figma 8301-17479 */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: r.cardSignal ? '5px' : '6px', overflow: 'hidden' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
                       <span style={{ fontSize: '12px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui' }}>★</span>
-                      <span style={{ fontSize: '12px', fontWeight: 500, color: '#52535b', fontFamily: 'Poppins, system-ui' }}>{r.rating}</span>
-                      <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
+                      <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui' }}>{r.rating}</span>
+                      <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
                     </div>
-                    <span style={{ width: '2px', height: '2px', borderRadius: '50%', background: '#52535b', flexShrink: 0, display: 'inline-block' }} />
-                    <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui' }}>{r.distance}</span>
+                    <span style={{ width: '2px', height: '2px', borderRadius: '50%', background: '#737373', flexShrink: 0, display: 'inline-block' }} />
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>{r.distance}</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui', flexShrink: 0 }}>|</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#737373', fontFamily: 'Poppins, system-ui', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.cuisine}</span>
                   </div>
                   {/* Social proof chip — matches HomeScreen style */}
                   {r.cardSignal && (
