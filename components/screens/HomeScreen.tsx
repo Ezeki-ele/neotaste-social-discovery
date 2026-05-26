@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { restaurants, dinnerPickIds } from '@/lib/data';
-import type { SignalType } from '@/lib/data';
+import { restaurants } from '@/lib/data';
+import type { SignalType, Restaurant } from '@/lib/data';
 import type { Tab } from '@/app/page';
 import { TabBarPlain } from '@/app/page';
 
@@ -41,6 +41,75 @@ function CardSignalIcon({ type }: { type: SignalType }) {
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
         <path d="M13 2L4.09 12.11A1 1 0 0 0 5 14h7l-1 8 8.91-10.11A1 1 0 0 0 19 10h-7l1-8z" fill="#069af1" />
       </svg>
+    </div>
+  );
+}
+
+function SectionCarousel({ title, items, onOpenRestaurant }: {
+  title: string;
+  items: Restaurant[];
+  onOpenRestaurant: (id: string) => void;
+}) {
+  return (
+    <div style={{ marginBottom: '24px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px 8px' }}>
+        <span style={{ fontSize: '16px', fontWeight: 700, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>{title}</span>
+        <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18L15 12L9 6" stroke="#11301d" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <div style={{ paddingLeft: '16px', display: 'flex', gap: '12px', overflowX: 'auto', paddingRight: '16px', scrollbarWidth: 'none', paddingBottom: '4px' }}>
+        {items.map(r => (
+          <button
+            key={r.id}
+            onClick={() => onOpenRestaurant(r.id)}
+            style={{ flexShrink: 0, width: '170px', background: '#fff', borderRadius: '12px', overflow: 'hidden', border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'transform 100ms' }}
+            onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.97)')}
+            onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
+          >
+            <div style={{ height: '110px', position: 'relative', overflow: 'hidden' }}>
+              <img src={r.image} alt={r.shortName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {r.redemptions && (
+                <div style={{ position: 'absolute', top: '7px', left: '7px', background: 'rgba(0,0,0,0.6)', borderRadius: '20px', padding: '3px 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ fontSize: '10px' }}>🔥</span>
+                  <span style={{ fontSize: '10px', color: '#fff', fontWeight: 600, fontFamily: 'Poppins, system-ui' }}>{r.redemptions} redemptions</span>
+                </div>
+              )}
+            </div>
+            <div style={{ padding: '10px 8px 12px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <p style={{ fontSize: '13px', fontWeight: 700, color: '#1c1d28', fontFamily: 'Poppins, system-ui', lineHeight: '18px', letterSpacing: '0.25px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
+                  <span style={{ fontSize: '12px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui' }}>★</span>
+                  <span style={{ fontSize: '12px', fontWeight: 500, color: '#52535b', fontFamily: 'Poppins, system-ui' }}>{r.rating}</span>
+                  <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
+                </div>
+                <span style={{ width: '2px', height: '2px', borderRadius: '50%', background: '#52535b', flexShrink: 0, display: 'inline-block' }} />
+                <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.cuisine}</span>
+              </div>
+              {r.cardSignal && (
+                <div style={{ overflow: 'hidden' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#e5e5e5', borderRadius: '16px', padding: '4px 8px', overflow: 'hidden', maxWidth: '100%' }}>
+                    <CardSignalIcon type={r.cardSignal.type} />
+                    <span style={{ fontSize: '11px', color: 'rgba(0,0,0,0.7)', fontWeight: 600, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {r.cardSignal.text}
+                    </span>
+                  </div>
+                </div>
+              )}
+              <div style={{ display: 'flex', gap: '4px', flexWrap: 'nowrap', overflow: 'hidden' }}>
+                {r.deals.slice(0, 2).map(d => (
+                  <span key={d.id} style={{ background: '#53f293', color: '#1c1d28', fontSize: '11px', fontWeight: 600, padding: '4px 8px', borderRadius: '16px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
+                    {d.title}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -89,7 +158,20 @@ const categories = [
 
 export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }: Props) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const dinnerPicks = dinnerPickIds.map(id => restaurants.find(r => r.id === id)!).filter(Boolean);
+
+  const pick = (ids: string[]) => ids.map(id => restaurants.find(r => r.id === id)!).filter(Boolean);
+
+  const sections: { title: string; items: Restaurant[] }[] = [
+    { title: 'Dinner picks',     items: pick(['otto-burger', 'quan19']) },
+    { title: 'New on NeoTaste',  items: pick(['capos-coffee', 'camping-coffee', 'dudes-coffee']) },
+    { title: 'Top 10 must-try',  items: pick(['otto-burger', 'quan19', 'peter-pane', 'dudes-coffee']) },
+    { title: 'Trending',         items: pick(['quan19', 'the-spot', 'camping-coffee', 'otto-burger']) },
+    { title: 'Top rated',        items: pick(['otto-burger', 'quan19', 'dudes-coffee', 'capos-coffee']) },
+    { title: 'Loyalty rewards',  items: pick(['capos-coffee', 'dudes-coffee', 'otto-burger']) },
+    { title: 'Pizza',            items: pick(['peter-pane', 'quan19', 'camping-coffee']) },
+    { title: 'Burgers',          items: pick(['otto-burger', 'peter-pane', 'the-spot']) },
+    { title: 'Asian',            items: pick(['quan19', 'camping-coffee', 'capos-coffee']) },
+  ];
 
   return (
     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
@@ -155,101 +237,10 @@ export default function HomeScreen({ onOpenRestaurant, activeTab, onTabChange }:
           </div>
         </div>
 
-        {/* Dinner picks */}
-        <div style={{ marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px 8px' }}>
-            <span style={{ fontSize: '16px', fontWeight: 700, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>Dinner picks</span>
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="#11301d" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
-
-          <div style={{ paddingLeft: '16px', display: 'flex', gap: '12px', overflowX: 'auto', paddingRight: '16px', scrollbarWidth: 'none', paddingBottom: '4px' }}>
-            {dinnerPicks.map(r => (
-              <button
-                key={r.id}
-                onClick={() => onOpenRestaurant(r.id)}
-                style={{ flexShrink: 0, width: '170px', background: '#fff', borderRadius: '12px', overflow: 'hidden', border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'transform 100ms' }}
-                onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.97)')}
-                onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
-              >
-                {/* Photo — redemptions badge top-left */}
-                <div style={{ height: '110px', position: 'relative', overflow: 'hidden' }}>
-                  <img src={r.image} alt={r.shortName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  {r.redemptions && (
-                    <div style={{ position: 'absolute', top: '7px', left: '7px', background: 'rgba(0,0,0,0.6)', borderRadius: '20px', padding: '3px 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <span style={{ fontSize: '10px' }}>🔥</span>
-                      <span style={{ fontSize: '10px', color: '#fff', fontWeight: 600, fontFamily: 'Poppins, system-ui' }}>{r.redemptions} redemptions</span>
-                    </div>
-                  )}
-                </div>
-                {/* Card body — flex-col gap-[4px] matching Figma layout */}
-                <div style={{ padding: '10px 8px 12px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  {/* Name */}
-                  <p style={{ fontSize: '13px', fontWeight: 700, color: '#1c1d28', fontFamily: 'Poppins, system-ui', lineHeight: '18px', letterSpacing: '0.25px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</p>
-                  {/* Rating + dot + cuisine */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
-                      <span style={{ fontSize: '12px', fontWeight: 700, color: '#53f293', fontFamily: 'Poppins, system-ui' }}>★</span>
-                      <span style={{ fontSize: '12px', fontWeight: 500, color: '#52535b', fontFamily: 'Poppins, system-ui' }}>{r.rating}</span>
-                      <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui' }}>({r.reviewCount})</span>
-                    </div>
-                    <span style={{ width: '2px', height: '2px', borderRadius: '50%', background: '#52535b', flexShrink: 0, display: 'inline-block' }} />
-                    <span style={{ fontSize: '12px', color: '#52535b', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.cuisine}</span>
-                  </div>
-                  {/* Social proof chip */}
-                  {r.cardSignal && (
-                    <div style={{ overflow: 'hidden' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#e5e5e5', borderRadius: '16px', padding: '4px 8px', overflow: 'hidden', maxWidth: '100%' }}>
-                        <CardSignalIcon type={r.cardSignal.type} />
-                        <span style={{ fontSize: '11px', color: 'rgba(0,0,0,0.7)', fontWeight: 600, fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {r.cardSignal.text}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                  {/* Deal pills */}
-                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'nowrap', overflow: 'hidden' }}>
-                    {r.deals.slice(0, 2).map(d => (
-                      <span key={d.id} style={{ background: '#53f293', color: '#1c1d28', fontSize: '11px', fontWeight: 600, padding: '4px 8px', borderRadius: '16px', fontFamily: 'Poppins, system-ui', whiteSpace: 'nowrap' }}>
-                        {d.title}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Recently viewed */}
-        <div style={{ marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px 12px' }}>
-            <span style={{ fontSize: '16px', fontWeight: 700, color: '#0a0a0a', fontFamily: 'Poppins, system-ui' }}>Recently viewed</span>
-          </div>
-          {restaurants.slice(2, 4).map((r, i) => (
-            <button
-              key={r.id}
-              onClick={() => onOpenRestaurant(r.id)}
-              style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', padding: '10px 16px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i === 0 ? '1px solid rgba(28,29,40,0.08)' : 'none', textAlign: 'left', transition: 'background 100ms' }}
-              onMouseDown={e => (e.currentTarget.style.background = '#f5f5f5')}
-              onMouseUp={e => (e.currentTarget.style.background = 'none')}
-            >
-              <div style={{ width: 56, height: 56, borderRadius: '10px', flexShrink: 0, overflow: 'hidden' }}>
-                <img src={r.image} alt={r.shortName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '14px', fontWeight: 700, color: '#0a0a0a', marginBottom: '2px', fontFamily: 'Poppins, system-ui' }}>{r.shortName}</p>
-                <p style={{ fontSize: '12px', color: '#737373', fontFamily: 'Poppins, system-ui' }}>{r.cuisine} · {r.distance}</p>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="#737373" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </button>
-          ))}
-        </div>
+        {/* All sections */}
+        {sections.map(s => (
+          <SectionCarousel key={s.title} title={s.title} items={s.items} onOpenRestaurant={onOpenRestaurant} />
+        ))}
       </div>
 
       <TabBarPlain activeTab={activeTab} onTabChange={onTabChange} />
