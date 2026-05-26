@@ -201,10 +201,8 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
 
   if (tab === 'bookings') return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="4" width="18" height="17" rx="2.5" stroke={color} strokeWidth="1.5" fill="none" />
-      <path d="M3 9.5H21" stroke={color} strokeWidth="1.3" />
-      <path d="M8 2.5V6M16 2.5V6" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M9 15.5L11.2 17.5L15.5 13" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="3" y="3" width="18" height="18" rx="4" stroke={color} strokeWidth="1.5" />
+      <path d="M8.5 12L11 14.5L15.5 9.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 
