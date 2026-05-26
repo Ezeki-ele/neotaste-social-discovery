@@ -118,11 +118,11 @@ export default function DiscoverScreen({ onOpenRestaurant, activeTab, onTabChang
                 onMouseUp={e => (e.currentTarget.style.background = 'none')}
               >
                 {/* Photo */}
-                <div style={{ width: 76, height: 76, borderRadius: '10px', flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
+                <div style={{ width: 108, height: 108, borderRadius: '16px', flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
                   <img src={r.image} alt={r.shortName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   {r.isNew && (
-                    <div style={{ position: 'absolute', top: '5px', left: '5px', background: '#fff592', borderRadius: '4px', padding: '1px 6px' }}>
-                      <span style={{ fontSize: '9px', fontWeight: 700, color: '#a26706', fontFamily: 'Poppins, system-ui' }}>New</span>
+                    <div style={{ position: 'absolute', top: '8px', left: '8px', background: '#1c1d28', borderRadius: '8px', padding: '2px 6px' }}>
+                      <span style={{ fontSize: '10px', fontWeight: 700, color: '#fff', fontFamily: 'Poppins, system-ui', lineHeight: '12px', display: 'block' }}>New</span>
                     </div>
                   )}
                 </div>
