@@ -142,18 +142,19 @@ export function TabBarPlain({ activeTab, onTabChange }: { activeTab: Tab; onTabC
               alignItems: 'center',
               gap: '2px',
               padding: '8px 4px 6px',
-              background: activeTab === tab ? '#fff' : 'none',
+              background: activeTab === tab ? 'rgba(0,0,0,0.05)' : 'none',
               borderRadius: '22px',
               border: 'none',
               cursor: 'pointer',
-              transition: 'background 200ms',
+              transition: 'background 200ms, opacity 200ms',
+              opacity: activeTab === tab ? 1 : 0.5,
             }}
           >
             <TabIcon tab={tab} active={activeTab === tab} />
             <span style={{
               fontSize: '10px',
-              fontWeight: activeTab === tab ? 700 : 500,
-              color: activeTab === tab ? '#0a0a0a' : '#a3a3a3',
+              fontWeight: 500,
+              color: '#0a0a0a',
               fontFamily: 'Poppins, system-ui, sans-serif',
             }}>
               {labels[tab]}
@@ -166,7 +167,7 @@ export function TabBarPlain({ activeTab, onTabChange }: { activeTab: Tab; onTabC
 }
 
 export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
-  const color = active ? '#11301d' : '#a3a3a3';
+  const color = '#0a0a0a';
 
   if (tab === 'home') return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -187,7 +188,7 @@ export function TabIcon({ tab, active }: { tab: Tab; active: boolean }) {
       {active ? (
         <>
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill={color} />
-          <circle cx="12" cy="9" r="2.5" fill="#fff" />
+          <circle cx="12" cy="9" r="2.5" fill="rgba(255,255,255,0.85)" />
         </>
       ) : (
         <>
